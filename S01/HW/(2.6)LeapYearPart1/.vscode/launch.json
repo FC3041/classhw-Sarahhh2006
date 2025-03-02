@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "C#: (2.6)LeapYearPart1",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\(2.6)LeapYearPart1.csproj",
+            "launchConfigurationId": "TargetFramework=;(2.6)LeapYearPart1"
+        }
+    ]
+}
