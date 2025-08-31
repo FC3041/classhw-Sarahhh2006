@@ -1,4 +1,4 @@
-namespace Solve.Tests;
+namespace S27.Tests;
 
 [TestClass]
 public class InflationStatTests
@@ -16,20 +16,20 @@ public class InflationStatTests
     [TestMethod]
     public void Q1_DataParsingTest()
     {
-        Assert.Inconclusive();
-        // var stat = InflationStat.Parse(iran_line, first_line);
-        // Assert.AreEqual(stat.Country, "Iran Islamic Rep.");
-        // Assert.AreEqual(stat[1960], 9.82);
-        // Assert.AreEqual(stat[2020], 30.59);
-        // Assert.AreEqual(stat[2021], 43.39);
-        // Assert.AreEqual(stat[2022], 0);
+        // Assert.Inconclusive();
+        var stat = InflationStat.Parse(iran_line, first_line);
+        Assert.AreEqual(stat.Country, "Iran Islamic Rep.");
+        Assert.AreEqual(stat[1960], 9.82);
+        Assert.AreEqual(stat[2020], 30.59);
+        Assert.AreEqual(stat[2021], 43.39);
+        Assert.AreEqual(stat[2022], 0);
 
-        // stat = InflationStat.Parse(usa_line, first_line);
-        // Assert.AreEqual(stat.Country, "United States");
-        // Assert.AreEqual(stat[1960], 1.46);
-        // Assert.AreEqual(stat[2020], 1.23);
-        // Assert.AreEqual(stat[2021], 4.70);
-        // Assert.AreEqual(stat[2022], 8.00);        
+        stat = InflationStat.Parse(usa_line, first_line);
+        Assert.AreEqual(stat.Country, "United States");
+        Assert.AreEqual(stat[1960], 1.46);
+        Assert.AreEqual(stat[2020], 1.23);
+        Assert.AreEqual(stat[2021], 4.70);
+        Assert.AreEqual(stat[2022], 8.00);        
     }
 
 
@@ -46,14 +46,14 @@ public class InflationStatTests
     [TestMethod]
     public void Q2_ParseInflationFileTest()
     {
-        Assert.Inconclusive();
-        //     IEnumerable<InflationStat> data = lines.ParseInflationFile();
-        //     Assert.AreEqual(data.Count(), 266);
-        //     Assert.AreEqual(data.Where(d => d.Country == "Iran Islamic Rep.").Count(), 1);
-        //     Assert.AreEqual(data.Where(d => d.Country == "United States").Count(), 1);
+        // Assert.Inconclusive();
+            IEnumerable<InflationStat> data = lines.ParseInflationFile();
+            Assert.AreEqual(data.Count(), 266);
+            Assert.AreEqual(data.Where(d => d.Country == "Iran Islamic Rep.").Count(), 1);
+            Assert.AreEqual(data.Where(d => d.Country == "United States").Count(), 1);
 
-        //     Assert.AreEqual(data.Where(d => d.Country == "Iran Islamic Rep.").First()[1960], 9.82);
-        //     Assert.AreEqual(data.Where(d => d.Country == "United States").First()[1960], 1.46);
+            Assert.AreEqual(data.Where(d => d.Country == "Iran Islamic Rep.").First()[1960], 9.82);
+            Assert.AreEqual(data.Where(d => d.Country == "United States").First()[1960], 1.46);
 
     }
 
@@ -64,27 +64,27 @@ public class InflationStatTests
     [TestMethod]
     public void Q3_HighestLowestNYearsTest()
     {
-        Assert.Inconclusive();
-        // IEnumerable<InflationStat> data = lines.ParseInflationFile();
-        // var years = data.HighestNYears("iran", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new [] {(1995, 49.66), (2021, 43.39), (2019, 39.91) });
-        // years = data.LowestNYears("iran", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new [] {(1966, -0.39), (1963, 0.37), (1968, 0.69) });
+        // Assert.Inconclusive();
+        IEnumerable<InflationStat> data = lines.ParseInflationFile();
+        var years = data.HighestNYears("iran", 3).ToArray();
+        CollectionAssert.AreEqual(years, new [] {(1995, 49.66), (2021, 43.39), (2019, 39.91) });
+        years = data.LowestNYears("iran", 3).ToArray();
+        CollectionAssert.AreEqual(years, new [] {(1966, -0.39), (1963, 0.37), (1968, 0.69) });
 
-        // years = data.HighestNYears("afghan", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new [] {(2008, 26.42), (2005, 12.69), (2011, 11.80) });
-        // years = data.LowestNYears("afghan", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new [] {(2009, -6.81), (2015, -0.66), (2018, 0.63) });
+        years = data.HighestNYears("afghan", 3).ToArray();
+        CollectionAssert.AreEqual(years, new [] {(2008, 26.42), (2005, 12.69), (2011, 11.80) });
+        years = data.LowestNYears("afghan", 3).ToArray();
+        CollectionAssert.AreEqual(years, new [] {(2009, -6.81), (2015, -0.66), (2018, 0.63) });
 
-        // years = data.HighestNYears("saudi", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new [] {(1975, 34.58), (1976, 31.56), (1974, 21.44) });
-        // years = data.LowestNYears("saudi", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new [] {(1986, -3.2), (1985, -3.06), (2019, -2.09) });
+        years = data.HighestNYears("saudi", 3).ToArray();
+        CollectionAssert.AreEqual(years, new [] {(1975, 34.58), (1976, 31.56), (1974, 21.44) });
+        years = data.LowestNYears("saudi", 3).ToArray();
+        CollectionAssert.AreEqual(years, new [] {(1986, -3.2), (1985, -3.06), (2019, -2.09) });
 
-        // years = data.HighestNYears("germany", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new [] {(1973, 7.03), (1974, 6.99), (2022, 6.87) });
-        // years = data.LowestNYears("germany", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new [] {(1986, -0.13), (2020, 0.14), (1987, 0.25) });
+        years = data.HighestNYears("germany", 3).ToArray();
+        CollectionAssert.AreEqual(years, new [] {(1973, 7.03), (1974, 6.99), (2022, 6.87) });
+        years = data.LowestNYears("germany", 3).ToArray();
+        CollectionAssert.AreEqual(years, new [] {(1986, -0.13), (2020, 0.14), (1987, 0.25) });
     }
 
     /// <summary>
@@ -94,19 +94,19 @@ public class InflationStatTests
     [TestMethod]
     public void Q4_HighestLowestNInYearTest()
     {
-        Assert.Inconclusive();
-        // IEnumerable<InflationStat> data = lines.ParseInflationFile();
-        // var countries = data.HighestNInYear(1966, 3).ToArray();
-        // CollectionAssert.AreEqual(countries, new[] { ("Indonesia", 1136.25), ("Uruguay", 73.46), ("Myanmar", 25.49) });
+        // Assert.Inconclusive();
+        IEnumerable<InflationStat> data = lines.ParseInflationFile();
+        var countries = data.HighestNInYear(1966, 3).ToArray();
+        CollectionAssert.AreEqual(countries, new[] { ("Indonesia", 1136.25), ("Uruguay", 73.46), ("Myanmar", 25.49) });
 
-        // countries = data.LowestNInYear(1966, 3).ToArray();
-        // CollectionAssert.AreEqual(countries, new[] { ("Ethiopia", -1.36), ("El Salvador", -1.19), ("Morocco", -1.01) });     
+        countries = data.LowestNInYear(1966, 3).ToArray();
+        CollectionAssert.AreEqual(countries, new[] { ("Ethiopia", -1.36), ("El Salvador", -1.19), ("Morocco", -1.01) });     
 
-        // countries = data.HighestNInYear(2018, 3).ToArray();
-        // CollectionAssert.AreEqual(countries, new[] { ("South Sudan", 83.5), ("Sudan", 63.29), ("Liberia", 23.56) });
+        countries = data.HighestNInYear(2018, 3).ToArray();
+        CollectionAssert.AreEqual(countries, new[] { ("South Sudan", 83.5), ("Sudan", 63.29), ("Liberia", 23.56) });
 
-        // countries = data.LowestNInYear(2018, 3).ToArray();
-        // CollectionAssert.AreEqual(countries, new[] { ("Burundi", -2.81), ("St. Kitts and Nevis", -1.04), ("Rwanda", -0.31) });     
+        countries = data.LowestNInYear(2018, 3).ToArray();
+        CollectionAssert.AreEqual(countries, new[] { ("Burundi", -2.81), ("St. Kitts and Nevis", -1.04), ("Rwanda", -0.31) });     
     }
 
     /// <summary>
@@ -121,19 +121,19 @@ public class InflationStatTests
     [TestMethod]
     public void Q5_HighestNWhenLowestTest()
     {
-        Assert.Inconclusive();
-        // IEnumerable<InflationStat> data = lines.ParseInflationFile();
-        // var countries = data.HighestNWhenLowest("iran", 2).ToArray();
-        // CollectionAssert.AreEqual(countries, new[] { ("Indonesia", 1136.25), ("Uruguay", 73.46) });
+        // Assert.Inconclusive();
+        IEnumerable<InflationStat> data = lines.ParseInflationFile();
+        var countries = data.HighestNWhenLowest("iran", 2).ToArray();
+        CollectionAssert.AreEqual(countries, new[] { ("Indonesia", 1136.25), ("Uruguay", 73.46) });
 
-        // countries = data.LowestNWhenHighest("iran", 2).ToArray();
-        // CollectionAssert.AreEqual(countries, new[] { ("Samoa", -2.9), ("Cambodia", -0.8) });
+        countries = data.LowestNWhenHighest("iran", 2).ToArray();
+        CollectionAssert.AreEqual(countries, new[] { ("Samoa", -2.9), ("Cambodia", -0.8) });
 
-        // countries = data.HighestNWhenLowest("saudi", 2).ToArray();
-        // CollectionAssert.AreEqual(countries, new[] { ("Bolivia", 276.34), ("Brazil", 147.14) });
+        countries = data.HighestNWhenLowest("saudi", 2).ToArray();
+        CollectionAssert.AreEqual(countries, new[] { ("Bolivia", 276.34), ("Brazil", 147.14) });
 
-        // countries = data.LowestNWhenHighest("saudi", 2).ToArray();
-        // CollectionAssert.AreEqual(countries, new[] { ("Poland", 2.26), ("Singapore", 2.54) });        
+        countries = data.LowestNWhenHighest("saudi", 2).ToArray();
+        CollectionAssert.AreEqual(countries, new[] { ("Poland", 2.26), ("Singapore", 2.54) });        
     }
 
     /// <summary>
@@ -144,19 +144,19 @@ public class InflationStatTests
     [TestMethod]
     public void Q6_HighestLowestNImprovementInCountryTest()
     {
-        Assert.Inconclusive();
-        // IEnumerable<InflationStat> data = lines.ParseInflationFile();
-        // var years = data.HighestNImprovementsInCountry("iran", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new[] { (1995, 49.66, 1996, 28.94), (2013, 36.6, 2014, 16.61), (1977, 27.29, 1978, 11.72) });
+        // Assert.Inconclusive();
+        IEnumerable<InflationStat> data = lines.ParseInflationFile();
+        var years = data.HighestNImprovementsInCountry("iran", 3).ToArray();
+        CollectionAssert.AreEqual(years, new[] { (1995, 49.66, 1996, 28.94), (2013, 36.6, 2014, 16.61), (1977, 27.29, 1978, 11.72) });
 
-        // years = data.LowestNImprovementsInCountry("iran", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new[] { (2018, 18.01, 2019, 39.91), (1994, 31.45, 1995, 49.66), (2010, 10.09, 2011, 26.29) });
+        years = data.LowestNImprovementsInCountry("iran", 3).ToArray();
+        CollectionAssert.AreEqual(years, new[] { (2018, 18.01, 2019, 39.91), (1994, 31.45, 1995, 49.66), (2010, 10.09, 2011, 26.29) });
 
-        // years = data.HighestNImprovementsInCountry("saudi", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new[] { (1976, 31.56, 1977, 11.4), (1977, 11.4, 1978, -1.58), (1991, 4.86, 1992, -0.08) });
+        years = data.HighestNImprovementsInCountry("saudi", 3).ToArray();
+        CollectionAssert.AreEqual(years, new[] { (1976, 31.56, 1977, 11.4), (1977, 11.4, 1978, -1.58), (1991, 4.86, 1992, -0.08) });
 
-        // years = data.LowestNImprovementsInCountry("saudi", 3).ToArray();
-        // CollectionAssert.AreEqual(years, new[] { (1974, 21.44, 1975, 34.58), (1972, 4.33, 1973, 16.51), (2007, 4.17, 2008, 9.87) });
+        years = data.LowestNImprovementsInCountry("saudi", 3).ToArray();
+        CollectionAssert.AreEqual(years, new[] { (1974, 21.44, 1975, 34.58), (1972, 4.33, 1973, 16.51), (2007, 4.17, 2008, 9.87) });
     }
 
     /// <summary>
@@ -166,19 +166,19 @@ public class InflationStatTests
     /// عدد ورودی تعداد بیشترین یا کمترین خواسته شده می‌باشد.
     /// </summary>
    [TestMethod]
-    public void Q7_HighestLowestNImprovementTest()
-    {
-        Assert.Inconclusive();
-        // IEnumerable<InflationStat> data = lines.ParseInflationFile();
-        // var items = data.HighestNImprovements(2).ToArray();
-        // CollectionAssert.AreEqual(items, new[] { ("Congo Dem. Rep.", 1994, 23773.13, 1995, 541.91), ("Bolivia", 1985, 11749.64, 1986, 276.34) });
+        public void Q7_HighestLowestNImprovementTest()
+        {
+            // Assert.Inconclusive();
+            IEnumerable<InflationStat> data = lines.ParseInflationFile();
+            var items = data.HighestNImprovements(2).ToArray();
+            CollectionAssert.AreEqual(items, new[] { ("Congo Dem. Rep.", 1994, 23773.13, 1995, 541.91), ("Bolivia", 1985, 11749.64, 1986, 276.34) });
 
-        // items = data.LowestNImprovements(2).ToArray();
-        // CollectionAssert.AreEqual(items, new[] { ("Congo Dem. Rep.", 1993, 1986.9, 1994, 23773.13), ("Bolivia", 1984, 1281.35, 1985, 11749.64) });
+            items = data.LowestNImprovements(2).ToArray();
+            CollectionAssert.AreEqual(items, new[] { ("Congo Dem. Rep.", 1993, 1986.9, 1994, 23773.13), ("Bolivia", 1984, 1281.35, 1985, 11749.64) });
 
-        // Assert.AreEqual(data.HighestNImprovements(214).Last().country, "Iran Islamic Rep.");
-        // Assert.AreEqual(data.LowestNImprovements(191).Last().country, "Iran Islamic Rep.");
-    }
+            Assert.AreEqual(data.HighestNImprovements(214).Last().country, "Iran Islamic Rep.");
+            // Assert.AreEqual(data.LowestNImprovements(191).Last().country, "Iran Islamic Rep.");
+        }
 
     /// <summary>
     /// Extension Method AverageInflationPerDecadeInCountry
@@ -193,16 +193,16 @@ public class InflationStatTests
     [TestMethod]
     public void Q8_AverageInflationPerDecadeInCountryTest()
     {
-        Assert.Inconclusive();
-        // IEnumerable<InflationStat> data = lines.ParseInflationFile();
-        // var years = data.AverageInflationPerDecadeInCountry("iran").ToArray();
-        // CollectionAssert.AreEqual(years, new[] { (1960, 2.55), (1970, 11), (1980, 19.82), (1990, 23.71), (2000, 15.11), (2010, 20.25), (2020, 36.99) });
+        // Assert.Inconclusive();
+        IEnumerable<InflationStat> data = lines.ParseInflationFile();
+        var years = data.AverageInflationPerDecadeInCountry("iran").ToArray();
+        CollectionAssert.AreEqual(years, new[] { (1960, 2.55), (1970, 11), (1980, 19.82), (1990, 23.71), (2000, 15.11), (2010, 20.25), (2020, 36.99) });
 
-        // years = data.AverageInflationPerDecadeInCountry("iraq").ToArray();
-        // CollectionAssert.AreEqual(years, new[] { (1960, 2.23), (1970, 6.87), (1990, 149.15), (2000, 20.09), (2010, 2.12), (2020, 3.87) });
+        years = data.AverageInflationPerDecadeInCountry("iraq").ToArray();
+        CollectionAssert.AreEqual(years, new[] { (1960, 2.23), (1970, 6.87), (1990, 149.15), (2000, 20.09), (2010, 2.12), (2020, 3.87) });
 
-        // years = data.AverageInflationPerDecadeInCountry("united states").ToArray();
-        // CollectionAssert.AreEqual(years, new[] { (1960, 2.34), (1970, 7.09), (1980, 5.55), (1990, 3), (2000, 2.57), (2010, 1.77), (2020, 4.64) });
+        years = data.AverageInflationPerDecadeInCountry("united states").ToArray();
+        CollectionAssert.AreEqual(years, new[] { (1960, 2.34), (1970, 7.09), (1980, 5.55), (1990, 3), (2000, 2.57), (2010, 1.77), (2020, 4.64) });
     }
 
     /// <summary>

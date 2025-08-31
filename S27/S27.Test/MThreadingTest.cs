@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Security.Cryptography;
 
-namespace Solve.Tests;
+namespace S27.Tests;
 
 [TestClass]
 public class MThreadingTests
@@ -19,36 +19,39 @@ public class MThreadingTests
     [TestMethod]
     public void Q18_ThreadSafeDictoinary()
     {
-        Assert.Inconclusive();
-        // var tSDictionary = new TSDictionary<int, bool>();
-        // ParameterizedThreadStart d1 = (object o) => {
-        //     int n = (int)o;
-        //     for (int i = 0; i < 1_000_000; i += 2)
-        //         tSDictionary[i] = i % n == 0;
-        // };
-        // ParameterizedThreadStart d2 = (object o) => {
-        //     int n = (int)o;
-        //     for (int i = 1; i < 1_000_000; i += 2)
-        //         tSDictionary[i] = i % n == 0;
-        // };
+        // Assert.Inconclusive();
+        var tSDictionary = new TSDictionary<int, bool>();
+        ParameterizedThreadStart d1 = (object o) =>
+        {
+            int n = (int)o;
+            for (int i = 0; i < 1_000_000; i += 2)
+                tSDictionary[i] = i % n == 0;
+                //shows we should lock for setter 
+        };
+        ParameterizedThreadStart d2 = (object o) => {
+            int n = (int)o;
+            for (int i = 1; i < 1_000_000; i += 2)
+                tSDictionary[i] = i % n == 0;
+        };
 
-        // var t1 = new Thread(d1);
-        // var t2 = new Thread(d2);
-        // t1.Start(2);
-        // t2.Start(2);
-        // t1.Join();
-        // t2.Join();
-        // for (int i = 0; i < 1_000_000; i++)
-        //     Assert.AreEqual(tSDictionary[i], i % 2 == 0);
+        var t1 = new Thread(d1);
+        var t2 = new Thread(d2);
+        t1.Start(2);
+        t2.Start(2);
+        t1.Join();
+        t2.Join();
+        for (int i = 0; i < 1_000_000; i++)
+            Assert.AreEqual(tSDictionary[i], i % 2 == 0);
+            //this shows we should lock for getter
 
-        // t1 = new Thread(d1);
-        // t2 = new Thread(d2);
-        // t1.Start(3);
-        // t2.Start(3);
-        // t1.Join();
-        // t2.Join();
-        // for (int i = 0; i < 1_000_000; i++)
-        //     Assert.AreEqual(tSDictionary[i], i % 3 == 0);
+        t1 = new Thread(d1);
+        t2 = new Thread(d2);
+        t1.Start(3);
+        t2.Start(3);
+        t1.Join();
+        t2.Join();
+        for (int i = 0; i < 1_000_000; i++)
+            Assert.AreEqual(tSDictionary[i], i % 3 == 0);
     }
 
     /// <summary>
@@ -63,20 +66,20 @@ public class MThreadingTests
     [TestMethod]
     public async Task Q19_AsyncTest()
     {
-        Assert.Inconclusive();
-        // var sw = Stopwatch.StartNew();
-        // int msDelay = 500;
-        // string result = await DataFetcher.FetchDataAsync(msDelay);
-        // var ms = sw.ElapsedMilliseconds;
-        // Assert.AreEqual($"Data fetched afer {msDelay}ms", result);
-        // Assert.IsTrue(Math.Abs(ms - msDelay) < 100);
+        // Assert.Inconclusive();
+        var sw = Stopwatch.StartNew();
+        int msDelay = 500;
+        string result = await DataFetcher.FetchDataAsync(msDelay);
+        var ms = sw.ElapsedMilliseconds;
+        Assert.AreEqual($"Data fetched afer {msDelay}ms", result);
+        Assert.IsTrue(Math.Abs(ms - msDelay) < 100);
 
-        // msDelay = 700;
-        // sw.Restart();
-        // result = await DataFetcher.FetchDataAsync(msDelay);
-        // ms = sw.ElapsedMilliseconds;
-        // Assert.AreEqual($"Data fetched afer {msDelay}ms", result);
-        // Assert.IsTrue(Math.Abs(ms - msDelay) < 100);
+        msDelay = 700;
+        sw.Restart();
+        result = await DataFetcher.FetchDataAsync(msDelay);
+        ms = sw.ElapsedMilliseconds;
+        Assert.AreEqual($"Data fetched afer {msDelay}ms", result);
+        Assert.IsTrue(Math.Abs(ms - msDelay) < 100);
     }
 
     /// <summary>
@@ -89,33 +92,33 @@ public class MThreadingTests
     [TestMethod]
     public async Task Q20_RunTasksConecutively()
     {
-        Assert.Inconclusive();
-        // var wasRun = Enumerable.Repeat(false, 5).ToArray();
-        // var tasks = Enumerable.Repeat(100, 5)
-        //                       .Select((n,i) => new Task(() => {
-        //                           Task.Delay(n).Wait();
-        //                           wasRun[i] = true;
-        //                       })).ToArray();
-        // var sw = Stopwatch.StartNew();
-        // await TaskLib.RunTasksConecutively(tasks);
-        // var ms = sw.ElapsedMilliseconds;
-        // foreach (var wr in wasRun)
-        //     Assert.IsTrue(wr);
-        // Assert.IsTrue(Math.Abs(ms - 5 * 100) < 100);
+        // Assert.Inconclusive();
+        var wasRun = Enumerable.Repeat(false, 5).ToArray();
+        var tasks = Enumerable.Repeat(100, 5)
+                              .Select((n,i) => new Task(() => {
+                                  Task.Delay(n).Wait();
+                                  wasRun[i] = true;
+                              })).ToArray();
+        var sw = Stopwatch.StartNew();
+        await TaskLib.RunTasksConecutively(tasks);
+        var ms = sw.ElapsedMilliseconds;
+        foreach (var wr in wasRun)
+            Assert.IsTrue(wr);
+        Assert.IsTrue(Math.Abs(ms - 5 * 100) < 100);
 
 
-        // wasRun = Enumerable.Repeat(false, 3).ToArray();
-        // tasks = Enumerable.Repeat(200, 3)
-        //                       .Select((n,i) => new Task(() => {
-        //                           Task.Delay(n).Wait();
-        //                           wasRun[i] = true;
-        //                       })).ToArray();        
-        // sw = Stopwatch.StartNew();
-        // await TaskLib.RunTasksConecutively(tasks);
-        // ms = sw.ElapsedMilliseconds;
-        // foreach (var wr in wasRun)
-        //     Assert.IsTrue(wr);
-        // Assert.IsTrue(Math.Abs(ms - 3 * 200) < 100);
+        wasRun = Enumerable.Repeat(false, 3).ToArray();
+        tasks = Enumerable.Repeat(200, 3)
+                              .Select((n,i) => new Task(() => {
+                                  Task.Delay(n).Wait();
+                                  wasRun[i] = true;
+                              })).ToArray();        
+        sw = Stopwatch.StartNew();
+        await TaskLib.RunTasksConecutively(tasks);
+        ms = sw.ElapsedMilliseconds;
+        foreach (var wr in wasRun)
+            Assert.IsTrue(wr);
+        Assert.IsTrue(Math.Abs(ms - 3 * 200) < 100);
     }    
 
     /// <summary>
@@ -128,31 +131,31 @@ public class MThreadingTests
     [TestMethod]
     public async Task Q21_RunTasksInParallel()
     {
-        Assert.Inconclusive();
-        // var wasRun = Enumerable.Repeat(false, 5).ToArray();
-        // var tasks = Enumerable.Repeat(500, 5)
-        //                       .Select((n,i) => new Task(() => {
-        //                           Task.Delay(n).Wait();
-        //                           wasRun[i] = true;
-        //                       })).ToArray();
-        // var sw = Stopwatch.StartNew();
-        // await TaskLib.RunTasksInParallel(tasks);
-        // var ms = sw.ElapsedMilliseconds;
-        // foreach (var wr in wasRun)
-        //     Assert.IsTrue(wr);
-        // Assert.IsTrue(ms <  5 * 500 / 2);
+        // Assert.Inconclusive();
+        var wasRun = Enumerable.Repeat(false, 5).ToArray();
+        var tasks = Enumerable.Repeat(500, 5)
+                              .Select((n,i) => new Task(() => {
+                                  Task.Delay(n).Wait();
+                                  wasRun[i] = true;
+                              })).ToArray();
+        var sw = Stopwatch.StartNew();
+        await TaskLib.RunTasksInParallel(tasks);
+        var ms = sw.ElapsedMilliseconds;
+        foreach (var wr in wasRun)
+            Assert.IsTrue(wr);
+        Assert.IsTrue(ms <  5 * 500 / 2);
 
-        // wasRun = Enumerable.Repeat(false, 3).ToArray();
-        // tasks = Enumerable.Repeat(700, 3)
-        //                       .Select((n,i) => new Task(() => {
-        //                           Task.Delay(n).Wait();
-        //                           wasRun[i] = true;
-        //                       })).ToArray();        
-        // sw = Stopwatch.StartNew();
-        // await TaskLib.RunTasksInParallel(tasks);
-        // ms = sw.ElapsedMilliseconds;
-        // foreach (var wr in wasRun)
-        //     Assert.IsTrue(wr);
-        // Assert.IsTrue(ms < 700 * 3 / 2);
+        wasRun = Enumerable.Repeat(false, 3).ToArray();
+        tasks = Enumerable.Repeat(700, 3)
+                              .Select((n,i) => new Task(() => {
+                                  Task.Delay(n).Wait();
+                                  wasRun[i] = true;
+                              })).ToArray();        
+        sw = Stopwatch.StartNew();
+        await TaskLib.RunTasksInParallel(tasks);
+        ms = sw.ElapsedMilliseconds;
+        foreach (var wr in wasRun)
+            Assert.IsTrue(wr);
+        Assert.IsTrue(ms < 700 * 3 / 2);
     }        
 }
