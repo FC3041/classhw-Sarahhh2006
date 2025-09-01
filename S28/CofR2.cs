@@ -8,7 +8,7 @@ public class ExpenseRequest
     public string Requestor { get; set; }
 }
 
-// Abstract handler
+// Abstract handler 
 public abstract class ExpenseHandler
 {
     protected ExpenseHandler _nextHandler;
@@ -98,7 +98,7 @@ public class CEOHandler : ExpenseHandler
 // Usage example
 class Program
 {
-    static void Main()
+    static void Main888()
     {
         // Create handlers
         var teamLead = new TeamLeadHandler();
